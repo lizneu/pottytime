@@ -7,8 +7,12 @@
   });
 
   var detailedSocket = io.connect('http://localhost/detailed');
-  detailedSocket.emit("detailed", {id: '527e535047fef5488be50deb'});
+  detailedSocket.emit("detailed", {id: '527e8a5fb435fb6a7f869d12'});
   detailedSocket.on('potty', function (data) {
     console.log(data);
   });
+
+  var addReviewSocket = io.connect('http://localhost/add_review');
+  addReviewSocket.emit("add_review", {id: '527e8a5fb435fb6a7f869d12', "review": {"rating": 4, "review": "SO FREEING"}});
+
 </script>
