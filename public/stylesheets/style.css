@@ -77,6 +77,14 @@ a {
 	text-align: left;
 }
 
+#detailView{
+	display:none;
+}
+
+#addNewView{
+	display:none;
+}
+
 #detailView > #title{
 	font-size: 20pt;
 	font-weight: 700;
