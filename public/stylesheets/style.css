@@ -1,8 +1,58 @@
+html, body {
+  height: 100%;
+}
+
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
 }
+
+.container.fill {
+  height: 100%;
+}
+
+.view {
+  height: 100%;
+}
+
+.findView {
+  height: 90%;
+}
+
+#listView {
+  overflow: scroll;
+  display: none;
+}
+
+.entry {
+  display: inline-block;
+  width: 100%;
+  border: 1px solid lightgray;
+  padding: 2%;
+}
+
+.rating {
+  float: left;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 48px;
+  line-height: 50px;
+}
+
+#mapCanvas {
+  height: 100%;
+}
+
+.btn-group {
+  width: 100%;
+}
+
+.toggleBtn {
+  width: 50%;
+  border-radius: 0 !important;
+}
+
