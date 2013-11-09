@@ -36,8 +36,8 @@ block content
     .view#addNewView
       form#newPottyForm
         #title Submit a New Potty
-        input.form-control#address(value="Address (i.e. 53rd St & 3rd Ave)")
-        input.form-control#description(value="Description (i.e. Starbucks)")
+        input.form-control#addressEntry(value="Address (i.e. 53rd St & 3rd Ave)")
+        input.form-control#descriptionEntry(value="Description (i.e. Starbucks)")
         #accesibility
             .toggleBtn.btn.btn-primary.active#pubBtn Public
             .toggleBtn.btn.btn-primary#priBtn Customers Only
@@ -52,7 +52,7 @@ block content
             .toggleBtn.ratingBtn.btn.btn-primary#fourBtn 4
             .toggleBtn.ratingBtn.btn.btn-primary#fiveBtn 5
         textarea.form-control#review
-        input.btn.btn-block.btn-primary#submitBtn(type="submit") Submit
+        button.btn.btn-block.btn-primary#submitBtn(type="submit") Submit
   script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
   script(type="text/javascript" src="js/bootstrap.min.js")
   script(type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsPkG9N-Ip2foqVhbZYivMeZlCPHI4eEE&sensor=true")

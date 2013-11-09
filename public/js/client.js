@@ -1,6 +1,7 @@
 P = {};
 
 P.getPottiesSocket;
+P.addPottySocket;
 
 P.map;
 P.currPos;
@@ -209,12 +210,17 @@ $(document).ready(function(){
     }
   });
 
-    $("#pubBtn").on('click touchstart', function(){
-    if (!$("#pubBtn").hasClass("active")) {
-      $("#pubView").css("display","block");
-      $("#priBtn").toggleClass("active");
-      $("#pubBtn").toggleClass("active");
-    }
+  $("#newPottyForm").submit(function(event){
+    var lat = P.currPos.lat();
+    var lng = P.currPos.lng();
+    var rat  = parseInt($('.ratingBtn.active').text());
+    var addr = $("$addressEntry").text();
+    var review = [{rating: rat, text : $("#reviewcontent").text()}];
+    var desc = {isPublic: $("#pubBtn").hasClass("active"), isSingle : $("#singleBtn").hasClass("active"), text: $("#descriptionEntry").text()};
+    var potty = P.makePotty(0,P.currPos, addr, desc, rat, review);
+    P.addPottySocket = io.connect("http://localhost/add");
+    P.addPottySocket.emit("add", {lat: lat, long: lng, rating: rat,reviews: review, desc: desc});
+    return false;
   });
   
   P.initMap();
