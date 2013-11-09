@@ -240,7 +240,7 @@ P.removeAllMarkers = function() {
 };
 
 P.updateList = function() {
-  $("#listView .entry").remove();
+  $("#listView div").remove();
 
   var i=0;
   while(i < P.potties.length) {
@@ -251,7 +251,12 @@ P.updateList = function() {
         .append($("<p class='dist'></p>").text(potty.getDist().toFixed(2) + " mi")));
     i++;
   } 
-}
+
+  console.log("i = " + i);
+  if (P.potties.length == 0) {
+    $("#listView").append($("<div>No potties :(</div>"));
+  }
+};
 
 
 $(document).ready(function(){
@@ -323,14 +328,13 @@ $(document).ready(function(){
         $("#detailView").hide();
         $("#addNewView").hide();
       } else{
-        var pottyAt = P.pottyImAt(.002);
+        var pottyAt = P.pottyImAt(.00);
         if (pottyAt){
           P.currPotty = pottyAt;
           P.loadDetailPage();
           $("#detailView").show();
         } else{
-          alert("Whomp whomp");
-          //add view
+          $("#addNewView").show();
         }
         $("#findPottyView").hide();
         $("#atBathroom").text("Close");
