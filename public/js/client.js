@@ -133,6 +133,10 @@ P.initMap = function() {
         map: P.map
       });
 
+      google.maps.event.addListener(P.map, 'bounds_changed', function() {
+        P.loadPotties();
+      });
+
       P.loadPotties(); 
 
     }, function() {
@@ -147,7 +151,7 @@ P.initMap = function() {
 P.addPotty = function(newPotty) {
   if ($.inArray(newPotty, P.potties) == -1) {
     P.potties.push(newPotty);
-    
+
     var marker = new google.maps.Marker({
       position: newPotty.getLocation(),
       draggable: false,
@@ -200,7 +204,7 @@ P.updateMarkers = function() {
 
 P.removeAllMarkers = function() {
   for (var i=0; i<P.markers.length; i++) {
-    P.markers[i].marker.setMap(null);
+    P.markers[i].getMarker().setMap(null);
   }
   P.markers = [];
 };
