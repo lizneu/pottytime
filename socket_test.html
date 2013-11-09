@@ -6,8 +6,9 @@
     console.log(data);
   });
 
-  socket.emit("detailed", {id: "527e50dd47fef5488be50dea"});
-  socket.on('potty', function (data) {
+  var detailedSocket = io.connect('http://localhost/detailed');
+  detailedSocket.emit("detailed", {id: '527e535047fef5488be50deb'});
+  detailedSocket.on('potty', function (data) {
     console.log(data);
   });
 </script>
