@@ -5,4 +5,9 @@
   socket.on('nearby', function (data) {
     console.log(data);
   });
+
+  socket.emit("detailed", {id: 'ObjectId("527e50dd47fef5488be50dea")'});
+  socket.on('potty', function (data) {
+    console.log(data);
+  });
 </script>
