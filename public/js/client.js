@@ -141,8 +141,13 @@ P.initMap = function() {
 };
 
 P.loadPotties = function() {
+
+  var bounds = P.map.getBounds();
+  var NE = bounds.getNorthEast();
+  var SW = bounds.getSouthWest();
+
   P.getPottiesSocket = io.connect("http://localhost/nearest");
-  P.getPottiesSocket.emit("nearest", {lat: P.currPos.lat(), long: P.currPos.lng()});
+  P.getPottiesSocket.emit("nearest", {ne_lat: NE.lat(), ne_long: NE.lng(), sw_lat: SW.lat(), sw_long: SW.lng()});
   P.getPottiesSocket.on("nearby", function(data) {
     console.log(data);
     P.potties = [];
