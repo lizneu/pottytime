@@ -11,4 +11,10 @@
   detailedSocket.on('potty', function (data) {
     console.log(data);
   });
+
+  var addSocket = io.connect('http://localhost/add');
+  addSocket.emit("add", {lat: 50, long: 48, rating: 3, reviews: {rating: 3, review: "This is shitty"}, desc: {isPublic: true, isSingle: true, text: "Fun and exciting place"}});
+  addSocket.on('potty', function (data) {
+    console.log(data);
+  });
 </script>
