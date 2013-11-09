@@ -31,27 +31,28 @@ block content
       #rating 
         .col-xs-6#stars 3.2 Stars
         .col-xs-6#numratings 5 Ratings
-      #reviewnum 3 Reviews
-        #reviewcontent OMG I LUV POTTY
+      .btn.btn-block.btn-primary Add your review
+      #reviewcontent OMG I LUV POTTY
     .view#addNewView
-      #title Submit a New Potty
-      input.form-control#address(value="Address (i.e. 53rd St & 3rd Ave)")
-      input.form-control#description(value="Description (i.e. Starbucks)")
-      #accesibility
-          .toggleBtn.btn.btn-primary.active#pubBtn Public
-          .toggleBtn.btn.btn-primary#priBtn Customers Only
-      #occupancy
-          .toggleBtn.btn.btn-primary.active#singleBtn Single
-          .toggleBtn.btn.btn-primary#multipleBtn Multiple
-      #rating-text Rating & Review (optional):
-      .row#stars
-          .toggleBtn.ratingBtn.btn.btn-primary#oneBtn 1
-          .toggleBtn.ratingBtn.btn.btn-primary#twoBtn 2
-          .toggleBtn.ratingBtn.btn.btn-primary.active#threeBtn 3
-          .toggleBtn.ratingBtn.btn.btn-primary#fourBtn 4
-          .toggleBtn.ratingBtn.btn.btn-primary#fiveBtn 5
-      textarea.form-control#review
-
+      form#newPottyForm
+        #title Submit a New Potty
+        input.form-control#address(value="Address (i.e. 53rd St & 3rd Ave)")
+        input.form-control#description(value="Description (i.e. Starbucks)")
+        #accesibility
+            .toggleBtn.btn.btn-primary.active#pubBtn Public
+            .toggleBtn.btn.btn-primary#priBtn Customers Only
+        #occupancy
+            .toggleBtn.btn.btn-primary.active#singleBtn Single
+            .toggleBtn.btn.btn-primary#multipleBtn Multiple
+        #rating-text Rating & Review (optional):
+        .row#stars
+            .toggleBtn.ratingBtn.btn.btn-primary#oneBtn 1
+            .toggleBtn.ratingBtn.btn.btn-primary#twoBtn 2
+            .toggleBtn.ratingBtn.btn.btn-primary.active#threeBtn 3
+            .toggleBtn.ratingBtn.btn.btn-primary#fourBtn 4
+            .toggleBtn.ratingBtn.btn.btn-primary#fiveBtn 5
+        textarea.form-control#review
+        input.btn.btn-block.btn-primary#submitBtn(type="submit") Submit
   script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
   script(type="text/javascript" src="js/bootstrap.min.js")
   script(type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsPkG9N-Ip2foqVhbZYivMeZlCPHI4eEE&sensor=true")
