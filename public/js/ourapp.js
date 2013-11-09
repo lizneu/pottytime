@@ -88,21 +88,28 @@ P.loadPotties = function() {
 
 
 $(document).ready(function(){
-  $("#mapBtn").on('click touchstart', function(){
-    if (!$("#mapBtn").hasClass("active")) {
-      $("#mapView").css("display","block");
-      $("#listView").css("display","none");
-      $("#mapBtn").toggleClass("active");
-      $("#listBtn").toggleClass("active");
+  $(".toggleBtn").bind('click touchstart', function() {
+    if (!$(this).hasClass("active")) {
+      $(this).siblings(".toggleBtn").removeClass("active");
+      $(this).addClass("active");
     }
   });
 
-  $("#listBtn").on('click touchstart', function(){
-    if (!$("#listBtn").hasClass("active")) {
-      $("#listView").css("display","block");
-      $("#mapView").css("display","none");
-      $("#mapBtn").toggleClass("active");
-      $("#listBtn").toggleClass("active");
+  $("#mapBtn").bind('click touchstart', function() {
+    if (!$(this).hasClass('active')) {
+      $("#mapView").show();
+      $("#listView").hide();
+      $("#mapBtn").addClass("active");
+      $("#listBtn").removeClass("active");
+    }
+  });
+
+  $("#listBtn").bind('click touchstart', function() {
+    if (!$(this).hasClass('active')) {
+      $("#mapView").hide();
+      $("#listView").show();
+      $("#mapBtn").removeClass("active");
+      $("#listBtn").addClass("active");
     }
   });
 

@@ -6,6 +6,7 @@ var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
 var nearest = require('./sockets/nearest')
+var detailed = require('./sockets/detailed')
 var http = require('http');
 var path = require('path');
 
@@ -14,6 +15,7 @@ var mongoClient = mongo.MongoClient;
 var mongoUri = process.env.MONGOHQ_URL || 'mongodb://localhost:27017/pottytime';
 mongoClient.connect(mongoUri, function (err, db) {
 	io.of("/nearest").on("connection", nearest.onConnect(db));
+	io.of("/detailed").on("connection", detailed.onConnect(db));
  });
 
 var app = express();
@@ -42,6 +44,9 @@ app.get('/users', user.list);
 app.get('/nearest', function (req, res) {
   res.sendfile(__dirname + '/socket_test.html');
 });
+app.get('/detailed', function (req, res) {
+  res.sendfile(__dirname + '/socket_test.html');
+});
 
 
 var server = http.createServer(app);
@@ -50,6 +55,3 @@ server.listen(app.get('port'), function(){
 });
 
 var io = require('socket.io').listen(server);
-
-
-
