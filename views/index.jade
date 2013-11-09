@@ -3,10 +3,10 @@ extends layout
 block content
   .container
     .view#findPottyView
-      .findView#mapView
+      .findView.row#mapView
         #mapCanvas(style="height: 400px")
       .findView#listView
-      .row#toggleView(data-toggle="buttons")
+      .row#toggleView
         .col-xs-6.toggleBtn.btn.btn-primary#mapBtn Map
         .col-xs-6.toggleBtn.btn.btn-primary#listBtn List
     .view#detailView
