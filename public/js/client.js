@@ -1,6 +1,7 @@
 P = {};
 
 P.map;
+P.currPos;
 
 P.potties = [];
 P.currPotty;
@@ -16,16 +17,41 @@ P.makePotty = function(id, location, address, desc, rating, reviews) {
     return location;
   };
 
+  potty.getDist = function() {
+    var R = 3959; // radius of earth in miles
+    var dLat = (P.currPos.lat() - location.lat())*(Math.PI/180);
+    var dLon = (P.currPos.lon() - location.lon())*(Math.PI/180));
+    var a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ; 
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    return R * c; // Distance in miles 
+  };
+
   potty.getAddress = function() {
     return address;
   };
 
   potty.getDesc = function() {
-    return desc;
+    return desc.text;
+  };
+
+  potty.isPublic = function() {
+    return desc.isPublic;
+  };
+
+  potty.singleStall = function() {
+    return desc.singleStall;
   };
 
   potty.getRating = function() {
     return rating;
+  };
+
+  potty.setRating = function(newRating) {
+    rating = newRating;
   };
 
   potty.getReviews = function() {
@@ -35,7 +61,9 @@ P.makePotty = function(id, location, address, desc, rating, reviews) {
   potty.addReview = function(rev) {
     reviews.push(rev);
   };
-}
+
+  return potty;
+};
 
 P.initMap = function() {
   var mapOptions = {
@@ -51,6 +79,8 @@ P.initMap = function() {
     navigator.geolocation.getCurrentPosition(function(position) {
       var pos = new google.maps.LatLng(position.coords.latitude,
                                        position.coords.longitude);
+
+      P.currPos = pos;
 
      /* var infowindow = new google.maps.InfoWindow({
         map: map,
@@ -84,6 +114,9 @@ P.initMap = function() {
 
 P.loadPotties = function() {
   P.potties = [];
+  for (int i=0; i<3; i++) {
+
+  }
 };
 
 
