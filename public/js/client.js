@@ -1,6 +1,7 @@
 P = {};
 
 P.getPottiesSocket;
+P.addPottySocket;
 
 P.map;
 P.currPos;
@@ -16,6 +17,9 @@ P.makePotty = function(id, location, address, desc, rating, reviews) {
     return id;
   };
 
+  potty.setId = function(d) {
+    id = d;
+  };
   potty.getLocation = function() {
     return location;
   };
@@ -209,12 +213,23 @@ $(document).ready(function(){
     }
   });
 
-    $("#pubBtn").on('click touchstart', function(){
-    if (!$("#pubBtn").hasClass("active")) {
-      $("#pubView").css("display","block");
-      $("#priBtn").toggleClass("active");
-      $("#pubBtn").toggleClass("active");
-    }
+  $("#newPottyForm").submit(function(event){
+    debugger;
+    var lat = P.currPos.lat();
+    var lng = P.currPos.lng();
+    var rat  = parseInt($('.ratingBtn.active').text());
+    var addr = $("#addressEntry").text();
+    var review = [{rating: rat, text : $("#reviewcontent").text()}];
+    var desc = {isPublic: $("#pubBtn").hasClass("active"), isSingle : $("#singleBtn").hasClass("active"), text: $("#descriptionEntry").text()};
+    var potty = P.makePotty(0,P.currPos, addr, desc, rat, review);
+    P.currPotty = potty;
+    P.addPottySocket = io.connect("http://localhost/add");
+    P.addPottySocket.emit("add", {lat: lat, long: lng, rating: rat,reviews: review, desc: desc});
+    P.addPottySocket.on("success", function(data){
+      P.currPotty.setId(data);
+    });
+
+    return false;
   });
   
   P.initMap();
