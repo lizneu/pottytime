@@ -308,14 +308,14 @@ $(document).ready(function(){
   }
   
 
-  $("#atBathroom").bind('touchstart', function() {
+  $("#atBathroom").bind('click touchstart', function() {
       if ($("#findPottyView").is(":hidden")){
         $("#findPottyView").show();
         $("#atBathroom").text("I'm at a Bathroom");
         $("#detailView").hide();
         $("#addNewView").hide();
       } else{
-        var pottyAt = P.pottyImAt(.002);
+        var pottyAt = P.pottyImAt(.00);
         if (pottyAt){
           P.currPotty = pottyAt;
           P.loadDetailPage();
