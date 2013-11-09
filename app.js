@@ -10,10 +10,11 @@ var http = require('http');
 var path = require('path');
 
 var mongo = require('mongodb');
-var monk = require('monk');
-var mongoUri = process.env.MONGOHQ_URL || 'localhost:27017/pottytime';
-console.log(mongoUri);
-var db = monk(mongoUri);
+var mongoClient = mongo.MongoClient;
+var mongoUri = process.env.MONGOHQ_URL || 'mongodb://localhost:27017/pottytime';
+mongoClient.connect(mongoUri, function (err, db) {
+	io.of("/nearest").on("connection", nearest.onConnect(db));
+ });
 
 var app = express();
 
@@ -51,4 +52,4 @@ server.listen(app.get('port'), function(){
 var io = require('socket.io').listen(server);
 
 
-io.of("/nearest").on("connection", nearest.onConnect(db));
+
