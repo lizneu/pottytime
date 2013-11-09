@@ -63,8 +63,42 @@ a {
 
 }
 
-#addNewView > #title{
+#rating > #stars {
+	width:70%;
+	font-size:16pt;
+}
+
+#rating > #numratings {
+	width:30%;
+	font-size:14pt;
+}
+
+#rumreviews{
+	text-align: left;
+}
+
+#detailView > #title{
 	font-size: 20pt;
 	font-weight: 700;
 }
-`
+
+#detailView > #address{
+	font-size: 20pt;
+	font-weight: 700;
+}
+
+#detailView > #description{
+	font-size: 18pt;
+	font-weight: 600;
+}
+
+#detailView > #distance{
+	font-size: 14pt;
+	font-weight: 600;
+}
+
+#detailView > #info{
+	font-size: 14pt;
+	font-weight: 600;
+	text-align: center
+}

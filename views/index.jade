@@ -25,20 +25,22 @@ block content
       #address 123 Fake St
       #description Starbucks
       #distance 0.7 mi away
-      .row
-        #accesibility Public
-        #occupancy Single Occupancy
-      #rating 3.2 Stars
+      #info
+        .col-xs-6#accesibility Public
+        .col-xs-6#occupancy Single Occupancy
+      #rating 
+        .col-xs-6#stars 3.2 Stars
+        .col-xs-6#numratings 5 Ratings
       #reviewnum 3 Reviews
-      #reviewcontent OMG I LUV POTTY
+        #reviewcontent OMG I LUV POTTY
     .view#addNewView
       #title Submit a New Potty
       input.form-control#address(value="Address (i.e. 53rd St & 3rd Ave)")
       input.form-control#description(value="Description (i.e. Starbucks)")
-      .row#accesibility
+      #accesibility
           .toggleBtn.btn.btn-primary.active#pubBtn Public
           .toggleBtn.btn.btn-primary#priBtn Customers Only
-      .row#occupancy
+      #occupancy
           .toggleBtn.btn.btn-primary.active#singleBtn Single
           .toggleBtn.btn.btn-primary#multipleBtn Multiple
       #rating-text Rating & Review (optional):

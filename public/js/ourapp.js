@@ -105,6 +105,14 @@ $(document).ready(function(){
       $("#listBtn").toggleClass("active");
     }
   });
+
+    $("#pubBtn").on('click touchstart', function(){
+    if (!$("#pubBtn").hasClass("active")) {
+      $("#pubView").css("display","block");
+      $("#priBtn").toggleClass("active");
+      $("#pubBtn").toggleClass("active");
+    }
+  });
   
   P.initMap();
 
