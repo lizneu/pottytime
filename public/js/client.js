@@ -1,6 +1,7 @@
 P = {};
 
 P.getPottiesSocket;
+P.addPottySocket;
 
 P.map;
 P.currPos;
@@ -16,6 +17,9 @@ P.makePotty = function(id, location, address, desc, rating, reviews) {
     return id;
   };
 
+  potty.setId = function(d) {
+    id = d;
+  };
   potty.getLocation = function() {
     return location;
   };
@@ -23,10 +27,10 @@ P.makePotty = function(id, location, address, desc, rating, reviews) {
   potty.getDist = function() {
     var R = 3959; // radius of earth in miles
     var dLat = (P.currPos.lat() - location.lat())*(Math.PI/180);
-    var dLon = (P.currPos.lon() - location.lon())*(Math.PI/180);
+    var dLon = (P.currPos.lng() - location.lng())*(Math.PI/180);
     var a = 
     Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.cos(location.lat()*(Math.PI/180)) * Math.cos(P.currPos.lat()*(Math.PI/180)) * 
     Math.sin(dLon/2) * Math.sin(dLon/2)
     ; 
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
@@ -45,8 +49,8 @@ P.makePotty = function(id, location, address, desc, rating, reviews) {
     return desc.isPublic;
   };
 
-  potty.singleStall = function() {
-    return desc.singleStall;
+  potty.isSingle = function() {
+    return desc.isSingle;
   };
 
   potty.getRating = function() {
@@ -140,6 +144,24 @@ P.initMap = function() {
   }
 };
 
+P.addPotty = function(newPotty) {
+  if ($.inArray(newPotty, P.potties) == -1) {
+    P.potties.push(newPotty);
+    
+    var marker = new google.maps.Marker({
+      position: newPotty.getLocation(),
+      draggable: false,
+      map: P.map
+    });
+    P.markers.push(P.makePottyMarker(marker, newPotty)); 
+
+    $("#listView").append($("<div class='entry'></div")
+        .append($("<div class='rating'></div").text(newPotty.getRating()))
+        .append($("<p class='address'></p>").text(newPotty.getAddress()))
+        .append($("<p class='dist'></p>").text(newPotty.getDist().toFixed(2) + " mi")));
+  }
+};
+
 P.loadPotties = function() {
 
   var bounds = P.map.getBounds();
@@ -159,6 +181,7 @@ P.loadPotties = function() {
       P.potties.push(potty);
     }
     P.updateMarkers();
+    P.updateList();
   });
 };
 
@@ -181,6 +204,20 @@ P.removeAllMarkers = function() {
   }
   P.markers = [];
 };
+
+P.updateList = function() {
+  $("#listView .entry").remove();
+
+  var i=0;
+  while(i < P.potties.length) {
+    var potty = P.potties[i];
+    $("#listView").append($("<div class='entry'></div")
+        .append($("<div class='rating'></div").text(potty.getRating()))
+        .append($("<p class='address'></p>").text(potty.getAddress()))
+        .append($("<p class='dist'></p>").text(potty.getDist().toFixed(2) + " mi")));
+    i++;
+  } 
+}
 
 
 $(document).ready(function(){
@@ -209,12 +246,23 @@ $(document).ready(function(){
     }
   });
 
-    $("#pubBtn").on('click touchstart', function(){
-    if (!$("#pubBtn").hasClass("active")) {
-      $("#pubView").css("display","block");
-      $("#priBtn").toggleClass("active");
-      $("#pubBtn").toggleClass("active");
-    }
+  $("#newPottyForm").submit(function(event){
+    var lat = P.currPos.lat();
+    var lng = P.currPos.lng();
+    var rat  = parseInt($('.ratingBtn.active').text());
+    var addr = $("#addressEntry").text();
+    var review = [{rating: rat, text : $("#reviewcontent").text()}];
+    var desc = {isPublic: $("#pubBtn").hasClass("active"), isSingle : $("#singleBtn").hasClass("active"), text: $("#descriptionEntry").text()};
+    var potty = P.makePotty(0,P.currPos, addr, desc, rat, review);
+    P.currPotty = potty;
+    P.addPottySocket = io.connect("http://localhost/add");
+    P.addPottySocket.emit("add", {lat: lat, long: lng, rating: rat,reviews: review, desc: desc});
+    P.addPottySocket.on("success", function(data){
+      P.currPotty.setId(data);
+      P.addPotty(P.currPotty);
+    });
+
+    return false;
   });
   
   P.initMap();
