@@ -303,7 +303,7 @@ $(document).ready(function(){
   }
   
 
-  $("#atBathroom").bind('click touchstart', function() {
+  $("#atBathroom").bind('touchstart', function() {
       if ($("#findPottyView").is(":hidden")){
         $("#findPottyView").show();
         $("#atBathroom").text("I'm at a Bathroom");
@@ -316,8 +316,7 @@ $(document).ready(function(){
           P.loadDetailPage();
           $("#detailView").show();
         } else{
-          alert("Whomp whomp");
-          //add view
+          $("#addNewView").show();
         }
         $("#findPottyView").hide();
         $("#atBathroom").text("Close");
