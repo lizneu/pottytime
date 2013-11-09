@@ -4,7 +4,14 @@ exports.onConnect = function(db){
 	return function(socket){
 		socket.on("add", function(data){	
 			collection.insert(data, function(err, result){
-				socket.emit("potty", result);
+				console.log(err);
+				console.log(result);
+				if (err || result.length != 1){
+					socket.emit("fail", err);
+				} else {
+					potty = result.shift();
+					socket.emit("success", potty._id);
+				}
 			});
 		});
 	};
