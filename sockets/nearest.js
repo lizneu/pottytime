@@ -23,6 +23,8 @@ exports.onConnect = function(db){
 			var max = 10;
 			var latRange = {$gte: data.lat-min, $lt: data.lat+max};
 			var longRange = {$gte: data.long-min, $lt: data.long+max};
+			console.log(latRange);
+			console.log(longRange);
 			collection.find({lat: latRange, long: longRange}).toArray(function(e,docs){
 				var nearestPotties = nearest(docs, data);
 				socket.emit("nearby", nearestPotties);
