@@ -109,5 +109,8 @@ a {
 }
 
 .title {
-  margin-left: 10px;
+}
+
+#atBathroom{
+  float:right;
 }
