@@ -27,10 +27,10 @@ P.makePotty = function(id, location, address, desc, rating, reviews) {
   potty.getDist = function() {
     var R = 3959; // radius of earth in miles
     var dLat = (P.currPos.lat() - location.lat())*(Math.PI/180);
-    var dLon = (P.currPos.lon() - location.lon())*(Math.PI/180);
+    var dLon = (P.currPos.lng() - location.lng())*(Math.PI/180);
     var a = 
     Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.cos(location.lat()*(Math.PI/180)) * Math.cos(P.currPos.lat()*(Math.PI/180)) * 
     Math.sin(dLon/2) * Math.sin(dLon/2)
     ; 
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
@@ -49,8 +49,8 @@ P.makePotty = function(id, location, address, desc, rating, reviews) {
     return desc.isPublic;
   };
 
-  potty.singleStall = function() {
-    return desc.singleStall;
+  potty.isSingle = function() {
+    return desc.isSingle;
   };
 
   potty.getRating = function() {
@@ -98,9 +98,11 @@ P.makePottyMarker = function(marker, potty) {
 P.loadDetailPage = function(){
   $("#description").text(P.currPotty.getDesc());
   $("#address").text(P.currPotty.getAddress());
-  $("#distance").text(P.currPotty.getDist());
-  $("#rating").text(P.currPotty.getRating());
-  if(P.currPotty.singleStall())
+  $("#distance").text(P.currPotty.getDist() + " miles away");
+  $("#stars").text(P.currPotty.getRating() + " Stars");
+  var revs = P.currPotty.getReviews();
+  $("#numratings").text(revs.length + " Ratings");
+  if(P.currPotty.isSingle())
     $("#accesibility").text("Single Stall");
   else
     $("#accesibility").text("Multiple Stalls");
@@ -108,7 +110,10 @@ P.loadDetailPage = function(){
     $("#accesibility").text("Public Use");
   else
     $("#accesibility").text("Customers only")  
-
+  var i = 0;
+  for(; i < revs.length ; i++){
+     $("#listView").append($("<div id='reviewcontent'></div").text(revs[i].text));
+  }
 
 }
 
@@ -144,6 +149,10 @@ P.initMap = function() {
         map: P.map
       });
 
+      google.maps.event.addListener(P.map, 'bounds_changed', function() {
+        P.loadPotties();
+      });
+
       P.loadPotties(); 
 
     }, function() {
@@ -152,6 +161,24 @@ P.initMap = function() {
   } else {
     // Browser doesn't support Geolocation
     console.log("your browser sucks, dude");
+  }
+};
+
+P.addPotty = function(newPotty) {
+  if ($.inArray(newPotty, P.potties) == -1) {
+    P.potties.push(newPotty);
+
+    var marker = new google.maps.Marker({
+      position: newPotty.getLocation(),
+      draggable: false,
+      map: P.map
+    });
+    P.markers.push(P.makePottyMarker(marker, newPotty)); 
+
+    $("#listView").append($("<div class='entry'></div")
+        .append($("<div class='rating'></div").text(newPotty.getRating()))
+        .append($("<p class='address'></p>").text(newPotty.getAddress()))
+        .append($("<p class='dist'></p>").text(newPotty.getDist().toFixed(2) + " mi")));
   }
 };
 
@@ -174,6 +201,7 @@ P.loadPotties = function() {
       P.potties.push(potty);
     }
     P.updateMarkers();
+    P.updateList();
   });
 };
 
@@ -192,10 +220,24 @@ P.updateMarkers = function() {
 
 P.removeAllMarkers = function() {
   for (var i=0; i<P.markers.length; i++) {
-    P.markers[i].marker.setMap(null);
+    P.markers[i].getMarker().setMap(null);
   }
   P.markers = [];
 };
+
+P.updateList = function() {
+  $("#listView .entry").remove();
+
+  var i=0;
+  while(i < P.potties.length) {
+    var potty = P.potties[i];
+    $("#listView").append($("<div class='entry'></div")
+        .append($("<div class='rating'></div").text(potty.getRating()))
+        .append($("<p class='address'></p>").text(potty.getAddress()))
+        .append($("<p class='dist'></p>").text(potty.getDist().toFixed(2) + " mi")));
+    i++;
+  } 
+}
 
 
 $(document).ready(function(){
@@ -238,6 +280,7 @@ $(document).ready(function(){
     P.addPottySocket.on("success", function(data){
       P.currPotty.setId(data);
       P.loadDetailPage();
+      P.addPotty(P.currPotty);
     });
 
     return false;

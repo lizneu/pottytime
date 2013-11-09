@@ -64,13 +64,15 @@ a {
 }
 
 #rating > #stars {
-	width:70%;
+	width:50%;
 	font-size:16pt;
+	text-align: center;
 }
 
 #rating > #numratings {
-	width:30%;
-	font-size:14pt;
+	width:50%;
+	font-size:16pt;
+	text-align: center;
 }
 
 
