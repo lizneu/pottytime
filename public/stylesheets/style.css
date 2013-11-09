@@ -30,6 +30,7 @@ a {
 #listView {
   overflow: scroll;
   display: none;
+  padding-top: 10px;
 }
 
 .entry {

@@ -129,8 +129,9 @@ P.initMap = function() {
   // Try HTML5 geolocation
   if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
-      var pos = new google.maps.LatLng(position.coords.latitude,
-                                       position.coords.longitude);
+      //var pos = new google.maps.LatLng(position.coords.latitude,
+      //                                 position.coords.longitude);
+      var pos = new google.maps.LatLng(50, 50);
 
       P.currPos = pos;
 
@@ -226,7 +227,7 @@ P.removeAllMarkers = function() {
 };
 
 P.updateList = function() {
-  $("#listView .entry").remove();
+  $("#listView div").remove();
 
   var i=0;
   while(i < P.potties.length) {
@@ -237,7 +238,12 @@ P.updateList = function() {
         .append($("<p class='dist'></p>").text(potty.getDist().toFixed(2) + " mi")));
     i++;
   } 
-}
+
+  console.log("i = " + i);
+  if (P.potties.length == 0) {
+    $("#listView").append($("<div>No potties :(</div>"));
+  }
+};
 
 
 $(document).ready(function(){
