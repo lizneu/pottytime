@@ -1,27 +1,54 @@
 extends layout
 
 block content
-  .container
+  .container.fill
     .view#findPottyView
-      .findView#mapView
-        #mapCanvas(style="height: 400px")
+      .findView.row#mapView
+        #mapCanvas
       .findView#listView
-      .row#toggleView(data-toggle="buttons")
-        .col-xs-6.toggleBtn.btn.btn-primary#mapBtn Map
-        .col-xs-6.toggleBtn.btn.btn-primary#listBtn List
+        .entry
+          .rating 5
+          p.address 69 Brown Street
+          p.dist 0.2 mi
+        .entry
+          .rating 5
+          p.address 69 Brown Street
+          p.dist 0.2 mi
+        .entry
+          .rating 5
+          p.address 69 Brown Street
+          p.dist 0.2 mi
+      .row#toggleView
+          .toggleBtn.btn.btn-primary.active#mapBtn Map
+          .toggleBtn.btn.btn-primary#listBtn List
     .view#detailView
+      #address 123 Fake St
+      #description Starbucks
+      #distance 0.7 mi away
+      .row
+        #accesibility Public
+        #occupancy Single Occupancy
+      #rating 3.2 Stars
+      #reviewnum 3 Reviews
+      #reviewcontent OMG I LUV POTTY
     .view#addNewView
+      #title Submit a New Potty
       input.form-control#address(value="Address (i.e. 53rd St & 3rd Ave)")
       input.form-control#description(value="Description (i.e. Starbucks)")
-      .btn-group-justified(data-toggle="buttons-radio")
-        .col-xs-6.toggleBtn.btn.btn-primary.btn-block.active#pubBtn Public
-        .col-xs-6.toggleBtn.btn.btn-primary.btn-block#priBtn Customers Only
-      .btn-group-justified(data-toggle="buttons-radio")
-        .col-xs-6.toggleBtn.btn.btn-primary.btn-block#singleBtn(name="occ") Single
-        .col-xs-6.toggleBtn.btn.btn-primary.btn-block#multipleBtn(name="occ") Multiple
-      .row
-        .col-xs-2#rating-text Rating:
-        .col-xs-6#rating-stars There should be stars here
+      .row#accesibility
+          .toggleBtn.btn.btn-primary.active#pubBtn Public
+          .toggleBtn.btn.btn-primary#priBtn Customers Only
+      .row#occupancy
+          .toggleBtn.btn.btn-primary.active#singleBtn Single
+          .toggleBtn.btn.btn-primary#multipleBtn Multiple
+      #rating-text Rating & Review (optional):
+      .row#stars
+          .ratingBtn.btn.btn-primary#oneBtn 1
+          .ratingBtn.btn.btn-primary#twoBtn 2
+          .ratingBtn.btn.btn-primary.active#threeBtn 3
+          .ratingBtn.btn.btn-primary#fourBtn 4
+          .ratingBtn.btn.btn-primary#fiveBtn 5
+      textarea.form-control#review
 
   script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
   script(type="text/javascript" src="js/bootstrap.min.js")
