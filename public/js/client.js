@@ -144,6 +144,18 @@ P.initMap = function() {
   }
 };
 
+P.addPotty = function(newPotty) {
+  if ($.inArray(newPotty, P.potties) == -1) {
+    P.potties.push(newPotty);
+    var marker = new google.maps.Marker({
+      position: newPotty.getLocation(),
+      draggable: false,
+      map: P.map
+    });
+    P.markers.push(P.makePottyMarker(marker, newPotty)); 
+  }
+};
+
 P.loadPotties = function() {
 
   var bounds = P.map.getBounds();
@@ -214,7 +226,6 @@ $(document).ready(function(){
   });
 
   $("#newPottyForm").submit(function(event){
-    debugger;
     var lat = P.currPos.lat();
     var lng = P.currPos.lng();
     var rat  = parseInt($('.ratingBtn.active').text());
@@ -227,6 +238,7 @@ $(document).ready(function(){
     P.addPottySocket.emit("add", {lat: lat, long: lng, rating: rat,reviews: review, desc: desc});
     P.addPottySocket.on("success", function(data){
       P.currPotty.setId(data);
+      P.addPotty(P.currPotty);
     });
 
     return false;
