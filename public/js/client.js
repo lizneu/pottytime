@@ -20,7 +20,7 @@ P.makePotty = function(id, location, address, desc, rating, reviews) {
   potty.getDist = function() {
     var R = 3959; // radius of earth in miles
     var dLat = (P.currPos.lat() - location.lat())*(Math.PI/180);
-    var dLon = (P.currPos.lon() - location.lon())*(Math.PI/180));
+    var dLon = (P.currPos.lon() - location.lon())*(Math.PI/180);
     var a = 
     Math.sin(dLat/2) * Math.sin(dLat/2) +
     Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
@@ -114,9 +114,6 @@ P.initMap = function() {
 
 P.loadPotties = function() {
   P.potties = [];
-  for (int i=0; i<3; i++) {
-
-  }
 };
 
 
