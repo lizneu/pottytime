@@ -141,8 +141,13 @@ P.initMap = function() {
 };
 
 P.loadPotties = function() {
+
+  var bounds = P.map.getBounds();
+  var NE = bounds.getNorthEast();
+  var SW = bounds.getSouthWest();
+
   P.getPottiesSocket = io.connect("http://localhost/nearest");
-  P.getPottiesSocket.emit("nearest", {lat: P.currPos.lat(), long: P.currPos.lng()});
+  P.getPottiesSocket.emit("nearest", {ne_lat: NE.lat(), ne_long: NE.lng(), sw_lat: SW.lat(), sw_long: SW.lng()});
   P.getPottiesSocket.on("nearby", function(data) {
     console.log(data);
     P.potties = [];
@@ -152,14 +157,29 @@ P.loadPotties = function() {
       var potty = P.makePotty(curr.id, new google.maps.LatLng(curr.lat, curr.long), 
           curr.address, curr.desc, curr.rating, curr.reviews);
       P.potties.push(potty);
-      var marker = new google.maps.Marker({
-        position: potty.getLocation(),
-        draggable: false,
-        map: P.map
-      });
-      P.markers.push(P.makePottyMarker(marker, potty));
     }
+    P.updateMarkers();
   });
+};
+
+P.updateMarkers = function() {
+  P.removeAllMarkers();
+  for (var i=0; i<P.potties.length; i++) {
+    var potty = P.potties[i];
+    var marker = new google.maps.Marker({
+      position: potty.getLocation(),
+      draggable: false,
+      map: P.map
+    });
+    P.markers.push(P.makePottyMarker(marker, potty));
+  }
+};
+
+P.removeAllMarkers = function() {
+  for (var i=0; i<P.markers.length; i++) {
+    P.markers[i].marker.setMap(null);
+  }
+  P.markers = [];
 };
 
 
