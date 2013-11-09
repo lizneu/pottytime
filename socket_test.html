@@ -7,14 +7,18 @@
   });
 
   var detailedSocket = io.connect('http://localhost/detailed');
-  detailedSocket.emit("detailed", {id: '527e535047fef5488be50deb'});
+  detailedSocket.emit("detailed", {id: '527e8a5fb435fb6a7f869d12'});
   detailedSocket.on('potty', function (data) {
     console.log(data);
   });
 
-  var addSocket = io.connect('http://localhost/add');
-  addSocket.emit("add", {lat: 41.308153, long: -72.9282, rating: 1, reviews: {rating: 1, review: "This place is suppose to be an office but it looks and smells like a shithole"}, desc: {isPublic: true, isSingle: true, text: "It is an office, not a bathroom. Really."}});
-  addSocket.on('success', function (data) {
-    console.log(data);
-  });
+  var addReviewSocket = io.connect('http://localhost/add_review');
+  addReviewSocket.emit("add_review", {id: '527e8a5fb435fb6a7f869d12', "rating": 4, "review": "SO FREEING"});
+
+  // var addSocket = io.connect('http://localhost/add');
+  // addSocket.emit("add", {lat: 41.308153, long: -72.9282, rating: 1, reviews: {rating: 1, review: "This place is suppose to be an office but it looks and smells like a shithole"}, desc: {isPublic: true, isSingle: true, text: "It is an office, not a bathroom. Really."}});
+  // addSocket.on('success', function (data) {
+  //   console.log(data);
+  // });
+
 </script>

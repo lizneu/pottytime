@@ -7,6 +7,7 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var nearest = require('./sockets/nearest')
 var detailed = require('./sockets/detailed')
+var add_review = require('./sockets/add_review')
 var add = require('./sockets/add')
 var http = require('http');
 var path = require('path');
@@ -14,9 +15,11 @@ var path = require('path');
 var mongo = require('mongodb');
 var mongoClient = mongo.MongoClient;
 var mongoUri = process.env.MONGOHQ_URL || 'mongodb://localhost:27017/pottytime';
+console.log(mongoUri);
 mongoClient.connect(mongoUri, function (err, db) {
 	io.of("/nearest").on("connection", nearest.onConnect(db));
 	io.of("/detailed").on("connection", detailed.onConnect(db));
+	io.of("/add_review").on("connection", add_review.onConnect(db));
 	io.of("/add").on("connection", add.onConnect(db));
  });
 
@@ -47,6 +50,9 @@ app.get('/nearest', function (req, res) {
   res.sendfile(__dirname + '/socket_test.html');
 });
 app.get('/detailed', function (req, res) {
+  res.sendfile(__dirname + '/socket_test.html');
+});
+app.get('/add_review', function (req, res) {
   res.sendfile(__dirname + '/socket_test.html');
 });
 
