@@ -34,8 +34,12 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-//app.get('/', routes.index);
+app.get('/', routes.index);
 app.get('/users', user.list);
+app.get('/nearest', function (req, res) {
+  res.sendfile(__dirname + '/socket_test.html');
+});
+
 
 var server = http.createServer(app);
 server.listen(app.get('port'), function(){
@@ -44,8 +48,5 @@ server.listen(app.get('port'), function(){
 
 var io = require('socket.io').listen(server);
 
-app.get('/', function (req, res) {
-  res.sendfile(__dirname + '/socket_test.html');
-});
 
 io.of("/nearest").on("connection", nearest.onConnect(db));
