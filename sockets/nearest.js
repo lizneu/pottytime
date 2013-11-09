@@ -14,7 +14,7 @@ function nearest(potties, loc){
 }
 
 exports.onConnect = function(db){
-	var collection = db.get('pottys');
+	var collection = db.get('potties');
 	//Returns a function to handle a connection to a socket
 	return function(socket){
 		socket.on("nearest", function(data){
