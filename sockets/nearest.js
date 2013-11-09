@@ -14,15 +14,16 @@ function nearest(potties, loc){
 }
 
 exports.onConnect = function(db){
-	var collection = db.get('potties');
+	var collection = db.collection('potties');
 	//Returns a function to handle a connection to a socket
 	return function(socket){
 		socket.on("nearest", function(data){
+			console.log(data);
 			var min = 10;
 			var max = 10;
 			var latRange = {$gte: data.lat-min, $lt: data.lat+max};
 			var longRange = {$gte: data.long-min, $lt: data.long+max};
-			collection.find({lat: latRange, long: longRange},{}, function(e,docs){
+			collection.find({lat: latRange, long: longRange}).toArray(function(e,docs){
 				var nearestPotties = nearest(docs, data);
 				socket.emit("nearby", nearestPotties);
 			});
