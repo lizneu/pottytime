@@ -27,10 +27,10 @@ P.makePotty = function(id, location, address, desc, rating, reviews) {
   potty.getDist = function() {
     var R = 3959; // radius of earth in miles
     var dLat = (P.currPos.lat() - location.lat())*(Math.PI/180);
-    var dLon = (P.currPos.lon() - location.lon())*(Math.PI/180);
+    var dLon = (P.currPos.lng() - location.lng())*(Math.PI/180);
     var a = 
     Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.cos(location.lat()*(Math.PI/180)) * Math.cos(P.currPos.lat()*(Math.PI/180)) * 
     Math.sin(dLon/2) * Math.sin(dLon/2)
     ; 
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
@@ -147,12 +147,18 @@ P.initMap = function() {
 P.addPotty = function(newPotty) {
   if ($.inArray(newPotty, P.potties) == -1) {
     P.potties.push(newPotty);
+    
     var marker = new google.maps.Marker({
       position: newPotty.getLocation(),
       draggable: false,
       map: P.map
     });
     P.markers.push(P.makePottyMarker(marker, newPotty)); 
+
+    $("#listView").append($("<div class='entry'></div")
+        .append($("<div class='rating'></div").text(newPotty.getRating()))
+        .append($("<p class='address'></p>").text(newPotty.getAddress()))
+        .append($("<p class='dist'></p>").text(newPotty.getDist().toFixed(2) + " mi")));
   }
 };
 
@@ -175,6 +181,7 @@ P.loadPotties = function() {
       P.potties.push(potty);
     }
     P.updateMarkers();
+    P.updateList();
   });
 };
 
@@ -197,6 +204,20 @@ P.removeAllMarkers = function() {
   }
   P.markers = [];
 };
+
+P.updateList = function() {
+  $("#listView .entry").remove();
+
+  var i=0;
+  while(i < P.potties.length) {
+    var potty = P.potties[i];
+    $("#listView").append($("<div class='entry'></div")
+        .append($("<div class='rating'></div").text(potty.getRating()))
+        .append($("<p class='address'></p>").text(potty.getAddress()))
+        .append($("<p class='dist'></p>").text(potty.getDist().toFixed(2) + " mi")));
+    i++;
+  } 
+}
 
 
 $(document).ready(function(){
