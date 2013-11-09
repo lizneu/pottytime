@@ -11,7 +11,9 @@ var path = require('path');
 
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/nodetest1');
+var mongoUri = process.env.MONGOHQ_URL || 'localhost:27017/pottytime';
+console.log(mongoUri);
+var db = monk(mongoUri);
 
 var app = express();
 
