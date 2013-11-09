@@ -173,6 +173,13 @@ P.addPotty = function(newPotty) {
       draggable: false,
       map: P.map
     });
+    google.maps.event.addListener(marker, 'click', function() { 
+          P.currPotty = newPotty;
+          P.loadDetailPage();
+          $("#detailView").show();
+          $("#findPottyView").hide();
+          $("#atBathroom").text("Close");
+    });
     P.markers.push(P.makePottyMarker(marker, newPotty)); 
 
     $("#listView").append($("<div class='entry'></div")
@@ -213,6 +220,13 @@ P.updateMarkers = function() {
       position: potty.getLocation(),
       draggable: false,
       map: P.map
+    });
+    google.maps.event.addListener(marker, 'click', function() { 
+          P.currPotty = potty;
+          P.loadDetailPage();
+          $("#detailView").show();
+          $("#findPottyView").hide();
+          $("#atBathroom").text("Close");
     });
     P.markers.push(P.makePottyMarker(marker, potty));
   }
@@ -301,7 +315,6 @@ $(document).ready(function(){
     } 
     return null;
   }
-  
 
   $("#atBathroom").bind('click touchstart', function() {
       if ($("#findPottyView").is(":hidden")){
