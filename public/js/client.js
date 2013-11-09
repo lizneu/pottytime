@@ -45,8 +45,8 @@ P.makePotty = function(id, location, address, desc, rating, reviews) {
     return desc.isPublic;
   };
 
-  potty.singleStall = function() {
-    return desc.singleStall;
+  potty.isSingle = function() {
+    return desc.isSingle;
   };
 
   potty.getRating = function() {
