@@ -110,8 +110,8 @@ P.loadDetailPage = function(){
     $("#accesibility").text("Public Use");
   else
     $("#accesibility").text("Customers only")  
-  var i = 0;
-  for(; i < revs.length ; i++){
+  
+  for(var i = 0; i < revs.length ; i++){
      $("#listView").append($("<div id='reviewcontent'></div").text(revs[i].text));
   }
 
@@ -285,10 +285,43 @@ $(document).ready(function(){
 
     return false;
   });
+
+  P.pottyImAt = function(threshold){
+    var closest;
+    var closestDist = Infinity;
+    for (var i = 0; i < P.potties.length; i++){
+      var dist = P.potties[i].getDist();
+      if (dist < closestDist){
+        closestDist = dist;
+        closest = P.potties[i];
+      }
+    }
+    if (closestDist < threshold){
+      return closest;
+    } 
+    return null;
+  }
   
 
   $("#atBathroom").bind('click touchstart', function() {
-      console.log("HIII");
+      if ($("#findPottyView").is(":hidden")){
+        $("#findPottyView").show();
+        $("#atBathroom").text("I'm at a Bathroom");
+        $("#detailView").hide();
+        $("#addNewView").hide();
+      } else{
+        var pottyAt = P.pottyImAt(.002);
+        if (pottyAt){
+          P.currPotty = pottyAt;
+          P.loadDetailPage();
+          $("#detailView").show();
+        } else{
+          alert("Whomp whomp");
+          //add view
+        }
+        $("#findPottyView").hide();
+        $("#atBathroom").text("Close");
+      }
   });
 
   P.initMap();

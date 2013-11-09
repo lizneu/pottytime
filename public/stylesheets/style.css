@@ -11,12 +11,16 @@ a {
 }
 
 
-.container.fill {
+.container {
   height: 100%;
 }
 
 .view {
   height: 100%;
+}
+
+#detailView, #addNewView{
+  display: none;
 }
 
 .findView {
@@ -119,4 +123,5 @@ a {
 
 .navbar{
   padding: 0px 10px;
+  margin: 0px !important;
 }
