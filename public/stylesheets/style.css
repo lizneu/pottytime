@@ -47,3 +47,12 @@ a {
   height: 100%;
 }
 
+.btn-group {
+  width: 100%;
+}
+
+.toggleBtn {
+  width: 50%;
+  border-radius: 0 !important;
+}
+

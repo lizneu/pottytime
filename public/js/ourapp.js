@@ -48,9 +48,13 @@ $(document).ready(function(){
 $("#mapBtn").click(function(){
   $("#mapView").css("display","block");
   $("#listView").css("display","none");
+  $("#mapBtn").toggleClass("active");
+  $("#listBtn").toggleClass("active");
 });
 
 $("#listBtn").click(function(){
   $("#listView").css("display","block");
   $("#mapView").css("display","none");
+  $("#mapBtn").toggleClass("active");
+  $("#listBtn").toggleClass("active");
 });
