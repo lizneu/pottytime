@@ -269,7 +269,10 @@ $(document).ready(function(){
     return false;
   });
   
-  P.initMap();
+
+  // $("#atBathroom").bind('click touchstart', function() {
+  //     console.log("HIII");
+  // });
 
 });
 

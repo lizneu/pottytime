@@ -114,3 +114,7 @@ a {
 #atBathroom{
   float:right;
 }
+
+.navbar{
+  padding: 0px 10px;
+}
