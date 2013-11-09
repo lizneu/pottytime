@@ -129,9 +129,8 @@ P.initMap = function() {
   // Try HTML5 geolocation
   if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
-      //var pos = new google.maps.LatLng(position.coords.latitude,
-      //                                 position.coords.longitude);
-      var pos = new google.maps.LatLng(50, 50);
+      var pos = new google.maps.LatLng(position.coords.latitude,
+                                       position.coords.longitude);
 
       P.currPos = pos;
 
