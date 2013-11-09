@@ -1,0 +1,8 @@
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect('http://localhost/nearest');
+  socket.emit("nearest", {lat: 50, long: 49.5});
+  socket.on('nearby', function (data) {
+    console.log(data);
+  });
+</script>

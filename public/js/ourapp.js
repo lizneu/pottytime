@@ -41,4 +41,16 @@ $(document).ready(function(){
     // Browser doesn't support Geolocation
     console.log("your browser sucks, dude");
   }
+
+
+});
+
+$("#mapBtn").click(function(){
+  $("#mapView").css("display","block");
+  $("#listView").css("display","none");
+});
+
+$("#listBtn").click(function(){
+  $("#listView").css("display","block");
+  $("#mapView").css("display","none");
 });

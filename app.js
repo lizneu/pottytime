@@ -2,12 +2,16 @@
 /**
  * Module dependencies.
  */
-
 var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
+var nearest = require('./sockets/nearest')
 var http = require('http');
 var path = require('path');
+
+var mongo = require('mongodb');
+var monk = require('monk');
+var db = monk('localhost:27017/nodetest1');
 
 var app = express();
 
@@ -32,7 +36,17 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+app.get('/nearest', function (req, res) {
+  res.sendfile(__dirname + '/socket_test.html');
+});
 
-http.createServer(app).listen(app.get('port'), function(){
+
+var server = http.createServer(app);
+server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+var io = require('socket.io').listen(server);
+
+
+io.of("/nearest").on("connection", nearest.onConnect(db));
