@@ -6,3 +6,10 @@ body {
 a {
   color: #00B7FF;
 }
+
+#rating-text{
+display:inline-block;
+}
+#rating-stars{
+display:inline-block;
+}

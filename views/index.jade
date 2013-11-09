@@ -11,6 +11,18 @@ block content
         .col-xs-6.toggleBtn.btn.btn-primary#listBtn List
     .view#detailView
     .view#addNewView
+      input.form-control#address(value="Address (i.e. 53rd St & 3rd Ave)")
+      input.form-control#description(value="Description (i.e. Starbucks)")
+      .btn-group-justified(data-toggle="buttons-radio")
+        .col-xs-6.toggleBtn.btn.btn-primary.btn-block.active#pubBtn Public
+        .col-xs-6.toggleBtn.btn.btn-primary.btn-block#priBtn Customers Only
+      .btn-group-justified(data-toggle="buttons-radio")
+        .col-xs-6.toggleBtn.btn.btn-primary.btn-block#singleBtn(name="occ") Single
+        .col-xs-6.toggleBtn.btn.btn-primary.btn-block#multipleBtn(name="occ") Multiple
+      .row
+        .col-xs-2#rating-text Rating:
+        .col-xs-6#rating-stars There should be stars here
+
   script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
   script(type="text/javascript" src="js/bootstrap.min.js")
   script(type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsPkG9N-Ip2foqVhbZYivMeZlCPHI4eEE&sensor=true")
