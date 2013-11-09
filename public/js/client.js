@@ -112,7 +112,7 @@ P.loadDetailPage = function(){
     $("#accesibility").text("Customers only")  
   
   for(var i = 0; i < revs.length ; i++){
-     $("#listView").append($("<div id='reviewcontent'></div").text(revs[i].text));
+     $("#detailView").append($("<div id='reviewcontent'></div").text(revs[i].text));
   }
 
 }
@@ -290,7 +290,7 @@ $(document).ready(function(){
     var lng = P.currPos.lng();
     var rat  = parseInt($('.ratingBtn.active').text());
     var addr = $("#addressEntry").val();
-    var review = [{rating: rat, text : $("#reviewcontent").val()}];
+    var review = [{rating: rat, text : $("#review").val()}];
     var desc = {isPublic: $("#pubBtn").hasClass("active"), isSingle : $("#singleBtn").hasClass("active"), text: $("#descriptionEntry").val()};
     var potty = P.makePotty(0,P.currPos, addr, desc, rat, review);
     P.currPotty = potty;
