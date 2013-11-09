@@ -20,6 +20,20 @@ $(document).ready(function(){
       });*/
 
       map.setCenter(pos);
+
+      var marker = new google.maps.Marker({
+        position: map.getCenter(),
+        icon: {
+          path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+          scale: 3,
+          fillOpacity: 1,
+          fillColor: "#00f",
+          strokeColor: "#00f"
+         },
+        draggable: true,
+        map: map
+      });
+
     }, function() {
       console.log("geolocation fail :("); 
     });
