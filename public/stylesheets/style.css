@@ -107,3 +107,7 @@ a {
 	font-weight: 600;
 	text-align: center
 }
+
+.title {
+  margin-left: 10px;
+}
