@@ -73,9 +73,6 @@ a {
 	font-size:14pt;
 }
 
-#rumreviews{
-	text-align: left;
-}
 
 /*#detailView{
 	display:none;
@@ -85,7 +82,7 @@ a {
 	display:none;
 }*/
 
-#detailView > #title{
+#title{
 	font-size: 20pt;
 	font-weight: 700;
 }
