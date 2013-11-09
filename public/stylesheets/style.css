@@ -52,7 +52,7 @@ a {
   width: 100%;
 }
 
-.findViewToggle {
+.findViewToggle, .toggleBtn {
   width: 50%;
   border-radius: 0 !important;
 }
@@ -77,13 +77,13 @@ a {
 	text-align: left;
 }
 
-#detailView{
+/*#detailView{
 	display:none;
 }
 
 #addNewView{
 	display:none;
-}
+}*/
 
 #detailView > #title{
 	font-size: 20pt;
