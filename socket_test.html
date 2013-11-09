@@ -1,7 +1,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
   var socket = io.connect('http://localhost/nearest');
-  socket.emit("nearest", {lat: 50, long: 49.5});
+  socket.emit("nearest", {ne_lat: 41.30816, ne_long: -72.91, sw_lat: 41.30814, sw_long: -72.93});
   socket.on('nearby', function (data) {
     console.log(data);
   });
@@ -13,6 +13,12 @@
   });
 
   var addReviewSocket = io.connect('http://localhost/add_review');
-  addReviewSocket.emit("add_review", {id: '527e8a5fb435fb6a7f869d12', "review": {"rating": 4, "review": "SO FREEING"}});
+  addReviewSocket.emit("add_review", {id: '527e8a5fb435fb6a7f869d12', "rating": 4, "review": "SO FREEING"});
+
+  // var addSocket = io.connect('http://localhost/add');
+  // addSocket.emit("add", {lat: 41.308153, long: -72.9282, rating: 1, reviews: {rating: 1, review: "This place is suppose to be an office but it looks and smells like a shithole"}, desc: {isPublic: true, isSingle: true, text: "It is an office, not a bathroom. Really."}});
+  // addSocket.on('success', function (data) {
+  //   console.log(data);
+  // });
 
 </script>

@@ -1,7 +1,10 @@
 P = {};
 
+P.getPottiesSocket;
+
 P.map;
 P.currPos;
+P.markers = [];
 
 P.potties = [];
 P.currPotty;
@@ -65,6 +68,29 @@ P.makePotty = function(id, location, address, desc, rating, reviews) {
   return potty;
 };
 
+P.makePottyMarker = function(marker, potty) {
+  var pottyMarker = {};
+
+  pottyMarker.getMarker = function() {
+    return marker;
+  };
+
+  pottyMarker.setMarker = function(m) {
+    marker = m;
+  };
+
+  pottyMarker.getPotty = function() {
+    return potty;
+  };
+
+  pottyMarker.setPotty = function(p) {
+    potty = p;
+  };
+
+  return pottyMarker;
+
+};
+
 P.initMap = function() {
   var mapOptions = {
     zoom: 16,
@@ -103,6 +129,8 @@ P.initMap = function() {
         map: P.map
       });
 
+      P.loadPotties(); 
+
     }, function() {
       console.log("geolocation fail :("); 
     });
@@ -113,7 +141,45 @@ P.initMap = function() {
 };
 
 P.loadPotties = function() {
-  P.potties = [];
+
+  var bounds = P.map.getBounds();
+  var NE = bounds.getNorthEast();
+  var SW = bounds.getSouthWest();
+
+  P.getPottiesSocket = io.connect("http://localhost/nearest");
+  P.getPottiesSocket.emit("nearest", {ne_lat: NE.lat(), ne_long: NE.lng(), sw_lat: SW.lat(), sw_long: SW.lng()});
+  P.getPottiesSocket.on("nearby", function(data) {
+    console.log(data);
+    P.potties = [];
+    P.currPotty = null;
+    for (var i=0; i<data.length; i++) {
+      var curr = data[i];
+      var potty = P.makePotty(curr.id, new google.maps.LatLng(curr.lat, curr.long), 
+          curr.address, curr.desc, curr.rating, curr.reviews);
+      P.potties.push(potty);
+    }
+    P.updateMarkers();
+  });
+};
+
+P.updateMarkers = function() {
+  P.removeAllMarkers();
+  for (var i=0; i<P.potties.length; i++) {
+    var potty = P.potties[i];
+    var marker = new google.maps.Marker({
+      position: potty.getLocation(),
+      draggable: false,
+      map: P.map
+    });
+    P.markers.push(P.makePottyMarker(marker, potty));
+  }
+};
+
+P.removeAllMarkers = function() {
+  for (var i=0; i<P.markers.length; i++) {
+    P.markers[i].marker.setMap(null);
+  }
+  P.markers = [];
 };
 
 

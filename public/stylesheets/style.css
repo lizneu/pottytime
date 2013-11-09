@@ -52,7 +52,7 @@ a {
   width: 100%;
 }
 
-.findViewToggle {
+.findViewToggle, .toggleBtn {
   width: 50%;
   border-radius: 0 !important;
 }
@@ -73,19 +73,16 @@ a {
 	font-size:14pt;
 }
 
-#rumreviews{
-	text-align: left;
-}
 
-#detailView{
+/*#detailView{
 	display:none;
 }
 
 #addNewView{
 	display:none;
-}
+}*/
 
-#detailView > #title{
+#title{
 	font-size: 20pt;
 	font-weight: 700;
 }
