@@ -95,6 +95,28 @@ P.makePottyMarker = function(marker, potty) {
 
 };
 
+P.loadDetailPage = function(){
+  $("#description").text(P.currPotty.getDesc());
+  $("#address").text(P.currPotty.getAddress());
+  $("#distance").text(P.currPotty.getDist() + " miles away");
+  $("#stars").text(P.currPotty.getRating() + " Stars");
+  var revs = P.currPotty.getReviews();
+  $("#numratings").text(revs.length + " Ratings");
+  if(P.currPotty.isSingle())
+    $("#accesibility").text("Single Stall");
+  else
+    $("#accesibility").text("Multiple Stalls");
+  if(P.currPotty.isPublic())
+    $("#accesibility").text("Public Use");
+  else
+    $("#accesibility").text("Customers only")  
+  var i = 0;
+  for(; i < revs.length ; i++){
+     $("#listView").append($("<div id='reviewcontent'></div").text(revs[i].text));
+  }
+
+}
+
 P.initMap = function() {
   var mapOptions = {
     zoom: 16,
@@ -111,12 +133,6 @@ P.initMap = function() {
                                        position.coords.longitude);
 
       P.currPos = pos;
-
-     /* var infowindow = new google.maps.InfoWindow({
-        map: map,
-        position: pos,
-        content: 'Location found using HTML5.'
-      });*/
 
       P.map.setCenter(pos);
 
@@ -254,15 +270,16 @@ $(document).ready(function(){
     var lat = P.currPos.lat();
     var lng = P.currPos.lng();
     var rat  = parseInt($('.ratingBtn.active').text());
-    var addr = $("#addressEntry").text();
-    var review = [{rating: rat, text : $("#reviewcontent").text()}];
-    var desc = {isPublic: $("#pubBtn").hasClass("active"), isSingle : $("#singleBtn").hasClass("active"), text: $("#descriptionEntry").text()};
+    var addr = $("#addressEntry").val();
+    var review = [{rating: rat, text : $("#reviewcontent").val()}];
+    var desc = {isPublic: $("#pubBtn").hasClass("active"), isSingle : $("#singleBtn").hasClass("active"), text: $("#descriptionEntry").val()};
     var potty = P.makePotty(0,P.currPos, addr, desc, rat, review);
     P.currPotty = potty;
     P.addPottySocket = io.connect("http://localhost/add");
     P.addPottySocket.emit("add", {lat: lat, long: lng, rating: rat,reviews: review, desc: desc});
     P.addPottySocket.on("success", function(data){
       P.currPotty.setId(data);
+      P.loadDetailPage();
       P.addPotty(P.currPotty);
     });
 
@@ -270,9 +287,10 @@ $(document).ready(function(){
   });
   
 
-  // $("#atBathroom").bind('click touchstart', function() {
-  //     console.log("HIII");
-  // });
+  $("#atBathroom").bind('click touchstart', function() {
+      console.log("HIII");
+  });
 
+  P.initMap();
 });
 
